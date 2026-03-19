@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de controle </title>
+</head>
+
+<body>
+    <script>
+        let supermercado = [];
+
+
+
+        function adicionarItem(arranjo, item) {
+            arranjo.push(item);
+            alert("Produto " + item + " adicionado com sucesso!");
+        }
+
+        function atualizarItemPorNome(arranjo, antigoNome, novoNome) {
+
+            if (!arranjo.includes(antigoNome)) {
+                alert("Produto não encontrado na lista!");
+                return;
+            }
+
+
+            supermercado = arranjo.map((item) => (item === antigoNome ? novoNome : item));
+            alert("O produto " + antigoNome + " foi atualizado para " + novoNome);
+        }
+
+        function removerItem(arranjo, opcao) {
+            if (arranjo.length === 0) {
+                alert("Não há produtos para remover.");
+                return;
+            }
+
+            if (opcao === "1") {
+                let removido = arranjo.shift();
+                alert("Produto '" + removido + "' (o primeiro) removido com sucesso");
+            } else if (opcao === "2") {
+                let removido = arranjo.pop();
+                alert("Produto '" + removido + "' (o último) removido com sucesso");
+            } else {
+                alert("Opção de remoção inválida");
+            }
+        }
+
+
+
+        function mostrar() {
+            if (supermercado.length === 0) {
+                alert("Não há produtos na cesta");
+                return;
+            }
+            let lista = "Lista de itens do supermercado:\n";
+            for (let i = 0; i < supermercado.length; i++) {
+                lista += i + " - " + supermercado[i] + "\n";
+            }
+            alert(lista);
+        }
+
+        function menu() {
+            let opcao;
+            do {
+                opcao = prompt(
+                    "--- MENU DO SUPERMERCADO ---\n" +
+                    "1 - Adicionar\n" +
+                    "2 - Mostrar\n" +
+                    "3 - Atualizar\n" +
+                    "4 - Remover\n" +
+                    "5 - Sair"
+                );
+
+                switch (opcao) {
+                    case "1":
+                        let nome = prompt("Digite um item de supermercado:");
+                        if (nome) {
+                            adicionarItem(supermercado, nome);
+                        } else {
+                            alert("Nome inválido!");
+                        }
+                        break;
+
+                    case "2":
+                        mostrar();
+                        break;
+
+                    case "3":
+                        if (supermercado.length === 0) {
+                            alert("Lista vazia. Não há o que atualizar.");
+                            break;
+                        }
+                        mostrar();
+                        let antigo = prompt("Digite o nome do produto que quer atualizar:");
+                        let novo = prompt("Digite o novo nome:");
+                        if (antigo && novo) {
+                            atualizarItemPorNome(supermercado, antigo, novo);
+                        }
+                        break;
+
+                    case "4":
+                        let escolhaRemover = prompt("Escolha: 1 para o PRIMEIRO, 2 para o ÚLTIMO:");
+                        removerItem(supermercado, escolhaRemover);
+                        break;
+
+                    case "5":
+                        alert("Encerrando supermercado...");
+                        break;
+
+                    default:
+                        alert("Opção inválida!");
+                }
+            } while (opcao !== "5");
+        }
+
+
+        menu();
+    </script>
+</body>
+
+</html>
